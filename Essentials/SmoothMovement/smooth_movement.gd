@@ -22,14 +22,23 @@ var velocity = Vector2.ZERO
 var global_target_position : Vector2
 var global_target_rotation : float
 
+var position_modifiers : Array[Vector2]; ## This will modify the global_target_position. This can be useful when adding temporary changes to an objects default position. 
+
+func modify_position(pos : Vector2) -> int: ## modifies the global position and returns the ID of the modification, which can be used to later delete the modification
+	position_modifiers.append(pos)
+	return position_modifiers.size() - 1
+
+func remove_position_modification_by_id(index : int): ## removes a modification of the global position through its id
+	position_modifiers.remove_at(index)
+
 func _process(delta: float) -> void:
-	var change = global_target_position - get_parent().global_position
+	var change = global_target_position + _get_total_modifier() - get_parent().global_position
 	if rotation_on:
 		_rotate_to_movement(delta)
 	if bounce:
-		_bounce(delta, global_target_position, global_target_rotation)
+		_bounce(delta, global_target_position + _get_total_modifier(), global_target_rotation)
 	else:
-		_move(delta, global_target_position, global_target_rotation)
+		_move(delta, global_target_position + _get_total_modifier(), global_target_rotation)
 
 func _bounce(delta: float, target_pos, target_rot) -> void:
 	var acceleration = (target_pos - get_parent().global_position) * speed * 3
@@ -45,3 +54,9 @@ func _move(delta: float, target_pos, target_rot) -> void:
 func _rotate_to_movement(delta) -> void:
 		var change : Vector2 = (global_target_position - get_parent().global_position) * delta
 		global_target_rotation = max(-max_rotation, min(max_rotation, change.x * rotation_strength));
+
+func _get_total_modifier() -> Vector2:
+	var total_modification : Vector2 = Vector2.ZERO
+	for modifier in position_modifiers:
+		total_modification += modifier
+	return total_modification

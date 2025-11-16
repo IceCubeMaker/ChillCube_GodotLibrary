@@ -2,21 +2,21 @@
 extends Node2D
 class_name NodeArranger
 
-@export var nodes_to_exclude : Array[Node]
-## Use if the nodes being sorted are not the child nodes (like sub-children)
-@export var alternative_node_list : Array[Node] = []
+@export var continous_arranging = true; ## If not true the elements won't arrange automatically
 
-@export var continous_arranging = true;
+@export var max_vertical : int = 1 ## Sets the maximum for how many nodes can be arranged by this node vertically
+@export var max_horizontal : int = 10 ## Sets the maximum for how many nodes can be arranged by this node horizontally
+@export var offset : Vector2; ## Offsets the position of all nodes being arranged by this node
+@export var centered : bool = true; ## (Attempts) to center the elements at the position of the arranger
 
-@export var max_vertical : int = 1
-@export var max_horizontal : int = 10
-@export var centered : bool = true;
+@export var distance_vertical : float = 100; ## Determines the vertical distance between each column
+@export var distance_horizontal : float = 100; ## Determines the horisontal distance between each row
 
-@export var distance_vertical : float = 100;
-@export var distance_horizontal : float = 100;
-
-@export var left_to_right : bool = true;
-@export var right_to_left : bool = true;
+@export_group("Node List")
+@export var nodes_to_exclude : Array[Node] ## Use if the nodes being sorted are not the child nodes (like sub-children)
+@export var ignore_node_exclusion : bool = false; ## Ignores the excluded nodes and includes them. 
+@export var alternative_node_list : Array[Node] = [] ## By default, this node arranges their children. With this you can use an alternative list of nodes to arrange instead of the children. 
+@export var ignore_alternative_node_list : bool = false; ## Ignores the alternative node list. 
 
 func _process(delta: float) -> void:
 	if continous_arranging:
@@ -24,13 +24,14 @@ func _process(delta: float) -> void:
 
 func arrange() -> void:
 	var nodes_to_arrange : Array[Node]
-	if alternative_node_list.size() == 0:
+	if alternative_node_list.size() == 0 or ignore_alternative_node_list:
 		nodes_to_arrange  = get_children()
 	else:
 		nodes_to_arrange = alternative_node_list
-	for node in nodes_to_exclude:
-		if node in nodes_to_arrange:
-			nodes_to_arrange.erase(node)
+	if not ignore_node_exclusion:
+		for node in nodes_to_exclude:
+			if node in nodes_to_arrange:
+				nodes_to_arrange.erase(node)
 	_arrange_nodes(nodes_to_arrange)
 
 func _arrange_nodes(nodes : Array[Node]) -> void:
@@ -48,9 +49,9 @@ func _arrange_nodes(nodes : Array[Node]) -> void:
 		if place_node:
 			var placement : Vector2 
 			if centered:
-				placement = global_position + Vector2(distance_horizontal * (node_count_horizontal - (max_horizontal/2)), distance_vertical * (node_count_vertical - (max_vertical/2)))
+				placement = global_position + offset + Vector2(distance_horizontal * (node_count_horizontal - (max_horizontal/2)), distance_vertical * (node_count_vertical - (max_vertical/2)))
 			else:
-				placement = global_position + Vector2(distance_horizontal * node_count_horizontal, distance_vertical * node_count_vertical)
+				placement = global_position + offset + Vector2(distance_horizontal * node_count_horizontal, distance_vertical * node_count_vertical)
 			_arrange_node(node, placement, 0)
 
 func _arrange_node(node : Node, global_pos, global_rot):
