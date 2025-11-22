@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd1tcxn5o6ojm"]
+
+[ext_resource type="Script" uid="uid://dbmjgo0nuo0gl" path="res://TextBox/text_box.gd" id="1_k7ve7"]
+
+[sub_resource type="Animation" id="Animation_bq8wy"]
+resource_name = "open"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lxl6v"]
+_data = {
+&"open": SubResource("Animation_bq8wy")
+}
+
+[node name="TextBox" type="Control" node_paths=PackedStringArray("animation_player")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_k7ve7")
+display_text = Array[String](["Placeholder Text"])
+scroll_speed = 0.05
+animation_player = NodePath("DefaultAnimationPlayer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "Placeholder Text"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+
+[node name="DefaultAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lxl6v")
+}
