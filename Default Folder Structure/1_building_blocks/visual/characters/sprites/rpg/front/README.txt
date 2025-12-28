@@ -1,0 +1,2 @@
+front facing sprites
+
