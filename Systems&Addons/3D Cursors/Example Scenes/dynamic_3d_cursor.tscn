@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://oh5r8wseuskm"]
+
+[ext_resource type="Script" uid="uid://dxcn7ogq7762s" path="res://export scripts/dynamic_3d_cursor.gd" id="1_3eigp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_sasra"]
+
+[node name="Dynamic 3D Cursor" type="Node3D" unique_id=187523789]
+script = ExtResource("1_3eigp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=130362046]
+mesh = SubResource("SphereMesh_sasra")

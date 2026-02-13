@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlt8pe7v4tuty"]
+
+[ext_resource type="Script" uid="uid://cuitgvpj84rm6" path="res://Systems&Addons/3D Cursors/Scripts/3d_cursor.gd" id="1_lubsa"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_uhqqe"]
+
+[node name="3D Cursor" type="Node3D"]
+transform = Transform3D(-1, 7.5710346e-08, -4.371139e-08, -3.5527137e-15, 0.49999997, 0.86602545, 8.742278e-08, 0.86602545, -0.49999997, 0, 0, 0)
+script = ExtResource("1_lubsa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.074986, 0)
+mesh = SubResource("SphereMesh_uhqqe")
