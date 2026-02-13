@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c46dpnjpyjjpc"]
 
-[ext_resource type="Script" uid="uid://daecq8crmcdk5" path="res://Addons/Dragging Objects with the Mouse/drag_with_mouse.gd" id="1_w17yu"]
+[ext_resource type="Script" uid="uid://daecq8crmcdk5" path="res://Systems&Addons/Dragging Objects with the Mouse/drag_with_mouse.gd" id="1_w17yu"]
 
 [node name="Drag With Mouse" type="Node"]
 script = ExtResource("1_w17yu")

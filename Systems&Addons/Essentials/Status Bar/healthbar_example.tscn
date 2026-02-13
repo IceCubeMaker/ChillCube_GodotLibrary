@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cr4wco21146fc"]
 
-[ext_resource type="Texture2D" uid="uid://ds013dd3qo81q" path="res://addons/Status Bar/16x64 Red Simple Healthbar.png" id="1_to8fw"]
-[ext_resource type="Script" uid="uid://bqijy3vtdknkm" path="res://addons/Status Bar/status_bar.gd" id="2_0t71m"]
+[ext_resource type="Texture2D" uid="uid://ds013dd3qo81q" path="res://Systems&Addons/Essentials/Status Bar/16x64 Red Simple Healthbar.png" id="1_to8fw"]
+[ext_resource type="Script" uid="uid://bqijy3vtdknkm" path="res://Systems&Addons/Essentials/Status Bar/status_bar.gd" id="2_0t71m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d21ai"]
 atlas = ExtResource("1_to8fw")

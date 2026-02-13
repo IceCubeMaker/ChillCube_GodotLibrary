@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ds013dd3qo81q"
-path="res://.godot/imported/16x64 Red Simple Healthbar.png-a00eea746c5a2b557fe8d20426215562.ctex"
+path="res://.godot/imported/16x64 Red Simple Healthbar.png-c65be40c16dcce8adf08323090ec9a4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Essentials/Status Bar/16x64 Red Simple Healthbar.png"
-dest_files=["res://.godot/imported/16x64 Red Simple Healthbar.png-a00eea746c5a2b557fe8d20426215562.ctex"]
+source_file="res://Systems&Addons/Essentials/Status Bar/16x64 Red Simple Healthbar.png"
+dest_files=["res://.godot/imported/16x64 Red Simple Healthbar.png-c65be40c16dcce8adf08323090ec9a4e.ctex"]
 
 [params]
 
