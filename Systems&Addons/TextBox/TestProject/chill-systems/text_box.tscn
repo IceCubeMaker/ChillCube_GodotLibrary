@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cx15x1s7jcftr"]
+
+[ext_resource type="Script" uid="uid://dwp8hye0y04fn" path="res://export scenes/text_box.gd" id="1_iqjdq"]
+[ext_resource type="Texture2D" uid="uid://gc5wc7ga0wdh" path="res://SpeechBubble Vector.svg" id="1_yn03g"]
+[ext_resource type="FontFile" uid="uid://frvha50gts05" path="res://GourmetEatery-V4qdw.otf" id="2_bu4k8"]
+[ext_resource type="Script" uid="uid://clhkmbuad7j4s" path="res://export scripts/bbcode tags/typed_effect.gd" id="4_p55ib"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_4d4ee"]
+script = ExtResource("4_p55ib")
+metadata/_custom_type_script = "uid://clhkmbuad7j4s"
+
+[node name="TextBoxRoot" type="Node2D" unique_id=149469080]
+script = ExtResource("1_iqjdq")
+positionOffset = Vector2(0, -50)
+
+[node name="TextBox" type="MarginContainer" parent="." unique_id=1221593967]
+offset_right = 258.0
+offset_bottom = 258.0
+scale = Vector2(0.333, 0.333)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TextBox" unique_id=1830211058]
+layout_mode = 2
+texture = ExtResource("1_yn03g")
+patch_margin_left = 132
+patch_margin_top = 132
+patch_margin_right = 126
+patch_margin_bottom = 126
+
+[node name="MarginContainer" type="MarginContainer" parent="TextBox" unique_id=1538988512]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 64
+
+[node name="Label" type="RichTextLabel" parent="TextBox/MarginContainer" unique_id=1976563364]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_bu4k8")
+theme_override_font_sizes/normal_font_size = 71
+bbcode_enabled = true
+text = "[pulse]Lorem[/pulse] [wave connected=0 amp=100]Ipsum[/wave] [tornado connected=0 freq=4]Dolor[/tornado] [shake level=25 connected=0][color=red]COWABUNGA[/color][/shake] [rainbow freq=1.5]aoisniuabsoibgoasibgasga[/rainbow]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_4d4ee")]
+
+[node name="LetterDisplayTimer" type="Timer" parent="TextBox" unique_id=1047823590]
+one_shot = true
+
+[connection signal="timeout" from="TextBox/LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]

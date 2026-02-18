@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dnsxoa8gawn1o"]
+
+[ext_resource type="Script" uid="uid://00gmovej22pu" path="res://export scripts/physics_3d_cursor.gd" id="1_l4ue3"]
+
+[node name="Physics 3D Cursor" type="Node3D" unique_id=741675209]
+script = ExtResource("1_l4ue3")
