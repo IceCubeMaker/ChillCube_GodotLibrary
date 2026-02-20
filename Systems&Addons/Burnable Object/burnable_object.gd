@@ -4,17 +4,20 @@ class_name Burnable
 
 var camera : Camera3D
 
+# FUTURE: To make minimum fire level required to advance a level
 # @export var burn_levels_dict : Dictionary[int, Resource]
 
-@export var burn_levels_scenes : Array[Resource]
-@export var burn_levels_objects : Array[Node]
+@export var burnable_id : String = "" ## Unique identifier for the character used by the game's systems (IMPORTANT TO SPELL RIGHT)
 
-@export var current_level_object : Node
+@export var burn_levels_scenes : Array[Resource] ## Scenes of the object's each burned level (by default uses scene 0 once it's spawned)
+@export var burn_levels_objects : Array[Node] ## Instantiated burnable's burn level objects
 
-@export var initial_level = 0
-@export var current_level = 0
+@export var current_level_object : Node ## The OBJECT of the current burn level
 
-signal object_burned(effect : String)
+@export var initial_level = 0 ## The burn level the object spawns with
+@export var current_level = 0 ## The INDEX of the current burn level
+
+signal object_burned(burned_object : ObjectLevel, burnable : Burnable) ## Emits when the object has been burned
 
 func render_2d() -> void:
 	var vp_position = camera.unproject_position(self.global_position)
@@ -33,12 +36,15 @@ func _ready():
 		pass
 	current_level_object = burn_levels_scenes[initial_level].instantiate()
 	self.add_child(current_level_object)
+	ProgressionManager.register_burnable(self)
 	
 
 func _on_fire_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("fire"):
+		emit_signal("object_burned", current_level_object, self)
 		current_level += 1
 		if current_level >= burn_levels_scenes.size():
+			
 			queue_free()
 		else:
 			current_level_object.queue_free()
@@ -46,3 +52,4 @@ func _on_fire_area_3d_body_entered(body: Node3D) -> void:
 			
 			self.add_child(current_level_object)
 			pass
+			

@@ -1,6 +1,6 @@
 extends Node
 
-@onready var textbox_scene = preload("res://export scenes/text_box.tscn")
+@onready var textbox_scene = preload("res://Systems&Addons/TextBox/Scenes/text_box.tscn")
 
 var dialog_lines : Array[String] = []
 var curr_dialog_index = 0
@@ -48,15 +48,16 @@ func _on_text_box_finished_displaying(text : String):
 		is_dialogue_active = false
 	can_advance = true
 
+# DialogueManager.gd
+signal dialogue_finished  # add this
+
 func _unhandled_input(event: InputEvent) -> void:
-	if(event.is_action_pressed("advance_dialog") && is_dialogue_active && can_advance):
-		#print("=== ADVANCING DIALOG ===")
+	if event.is_action_pressed("advance_dialog") && is_dialogue_active && can_advance:
 		textbox.queue_free()
 		curr_dialog_index += 1
-		
 		if curr_dialog_index >= dialog_lines.size():
-			#print("Dialog finished, resetting")
 			is_dialogue_active = false
 			curr_dialog_index = 0
+			emit_signal("dialogue_finished")  # ← emit here
 			return
 		_show_text_box()

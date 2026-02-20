@@ -9,7 +9,7 @@ class_name PhysicsCursor3D
 @export var draggable_group_name : String
 @export var visible_cursor_node : Node3D
 
-
+@export var able_to_drag : bool = true
 
 func _physics_process(delta):
 	# Moves the dragged object according to the mouse position
@@ -42,7 +42,7 @@ func _process(delta):
 	var hit = get_mouse_plane_intersection()
 	if hit:
 		visible_cursor_node.global_position = Vector3(hit.x, drag_height, hit.z)
-		print(visible_cursor_node.global_position)
+		#print(visible_cursor_node.global_position)
 
 # Raycasts from the camera according to the mouse position on window.
 func get_mouse_plane_intersection():
@@ -57,7 +57,7 @@ func get_mouse_plane_intersection():
 
 
 func _input(event):
-	if event.is_action_pressed(drag_action):
+	if event.is_action_pressed(drag_action) and !DialogueManager.is_dialogue_active:
 		start_drag_try()
 
 	if event.is_action_released(drag_action):
