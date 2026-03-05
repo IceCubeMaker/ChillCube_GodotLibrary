@@ -1,7 +1,6 @@
 ## This is a button that players can use to remape buttons. It will be useful for keybinds settings in the game. 
-
 extends Button
-class_name button_to_remape_buttons
+class_name buttonRemapperButton
 
 signal awaiting_input
 signal button_remapped(action_name : String, input : InputEvent)
