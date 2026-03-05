@@ -209,11 +209,14 @@ func _check_for_initial_navigation() -> void:
 				return
 
 func _handle_controller_input() -> void:
-	if Input.is_action_just_pressed("ui_accept"): _press_button()
+	if Input.is_action_just_pressed("ui_accept"): 
+		_press_button()
 	if Input.is_action_just_released("ui_accept"):
 		if texture == spr_button_pressed: _release_button()
 	var d_pad_dir = _get_dpad_direction()
-	if d_pad_dir != Vector2.ZERO: _navigate_to_closest(d_pad_dir)
+	if d_pad_dir != Vector2.ZERO: 
+		_navigate_to_closest(d_pad_dir)
+		get_viewport().set_input_as_handled() # Prevents other buttons from seeing it this frame
 
 func _get_dpad_direction() -> Vector2:
 	var dir = Vector2.ZERO
@@ -225,24 +228,29 @@ func _get_dpad_direction() -> Vector2:
 
 func _navigate_to_closest(dir: Vector2) -> void:
 	var buttons = get_tree().get_nodes_in_group("smooth_buttons")
-	if buttons.size() <= 1:
-		return
 	var best_candidate : SmoothButton = null
 	var min_score = INF
+	_update_anchor_position()
 	for b in buttons:
 		if b == self or b.button_hidden or not b is SmoothButton: 
 			continue
-		var vector_to_next = b.global_position - self.global_position
+		b._update_anchor_position() # Ensure the target has a valid position too
+		var vector_to_next = b.original_position - self.original_position
 		var distance = vector_to_next.length()
+		if distance < 0.1: continue 
 		var dot = vector_to_next.normalized().dot(dir)
-		if dot > 0.0:
-			var score = distance / (dot + 0.1) 
+		if dot > 0.5:
+			var score = distance + ((1.0 - dot) * 10000.0)
 			if score < min_score:
 				min_score = score
 				best_candidate = b
 	if best_candidate:
-		self.is_selected = false
-		best_candidate.is_selected = true
+		call_deferred("_change_selection", best_candidate)
+		get_viewport().set_input_as_handled()
+
+func _change_selection(target: SmoothButton) -> void:
+	self.is_selected = false
+	target.is_selected = true
 
 func _press_button() -> void:
 	button_pressed.emit()

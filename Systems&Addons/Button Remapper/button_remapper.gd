@@ -29,7 +29,7 @@ func remap_keybind(action : String = action_to_rebind) -> InputEvent:
 			InputMap.action_erase_event(action, e)
 
 	InputMap.action_add_event(action, event)
-	emit_signal("button_remapped", action, event)
+	emit_signal("button_remapped<", action, event)
 	return event
 
 func _is_same_category(e1: InputEvent, e2: InputEvent) -> bool:
